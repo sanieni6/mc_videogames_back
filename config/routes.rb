@@ -4,15 +4,11 @@ Rails.application.routes.draw do
                 sessions: 'users/sessions',
                 registrations: 'users/registrations'
               }
-get '/member-data', to: 'members#show'
+  get '/member-data', to: 'members#show'
 
-  resources :users, only: [] do
-    get '/videogames', to: 'videogames#index'
-    resources :reservations, only: [:index, :new, :create, :destroy] do
-      resources :videogames, only: [:index, :new, :create, :destroy]
-    end
-  end
 
+  resources :reservations, only: [:index, :new, :create]
+  resources :videogames, only: [:index, :show, :new, :create, :destroy]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
