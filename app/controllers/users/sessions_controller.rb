@@ -3,6 +3,13 @@ class Users::SessionsController < Devise::SessionsController
 
   private
 
+  def user_from_token
+    jwt_payload = JWT.decode(request.headers['Authorization'].split[1],
+                             Rails.application.credentials.devise[:jwt_secret_key]).first
+    user_id = jwt_payload['sub']
+    User.find(user_id.to_s)
+  end
+
   def respond_with(_resource, _opts = {})
     render json: {
       message: 'You are logged in.',
@@ -11,7 +18,8 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def respond_to_on_destroy
-    log_out_success && return if current_user
+    user = user_from_token
+    log_out_success && return if user
 
     log_out_failure
   end
