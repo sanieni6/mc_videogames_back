@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/member-data', to: 'members#show'
 
 
-  resources :reservations, only: [:index, :new, :create]
+  resources :reservations, only: [:index, :new, :create, :show]
   resources :videogames, only: [:index, :show, :new, :create, :destroy]
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

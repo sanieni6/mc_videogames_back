@@ -28,6 +28,11 @@ class ReservationsController < ApplicationController
     end
   end
 
+  def show
+    @user_reservations = current_user.reservations
+    render json: @user_reservations
+  end
+
   private
 
   def reservation_params
