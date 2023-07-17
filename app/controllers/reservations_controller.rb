@@ -17,8 +17,8 @@ class ReservationsController < ApplicationController
 
     @reservation = current_user.reservations.build(
       videogame_id: @videogame.id,
-      days: days,
-      total_price: total_price
+      days:,
+      total_price:
     )
 
     if @reservation.save
