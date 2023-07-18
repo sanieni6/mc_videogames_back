@@ -168,6 +168,178 @@ paths:
           description: You are logged out.
         '401':
           description: Invalid token.
+  "/videogames":
+    get:
+      summary: Retrieve all videogames
+      tags:
+      - Videogames
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get videogames
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    price_per_day:
+                      type: number
+                      format: float
+                    photo:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - price_per_day
+                  - photo
+    post:
+      summary: Create a videogame
+      tags:
+      - Videogames
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Videogame created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price_per_day:
+                    type: number
+                    format: float
+                  photo:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - price_per_day
+                - photo
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                videogame:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    price_per_day:
+                      type: number
+                      format: float
+                    photo:
+                      type: string
+                  required:
+                  - name
+                  - description
+                  - price_per_day
+                  - photo
+              required:
+              - videogame
+  "/videogames/{id}":
+    get:
+      summary: Retrieve a specific videogame
+      tags:
+      - Videogames
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Videogame details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price_per_day:
+                    type: number
+                    format: float
+                  photo:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - price_per_day
+                - photo
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete a videogame
+      tags:
+      - Videogames
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Videogame deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '401':
+          description: Unauthorized to delete a videogame
+        '404':
+          description: Not Found
 servers:
 - url: https://{defaultHost}
   variables:
