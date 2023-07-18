@@ -4,6 +4,131 @@ info:
   title: API V1
   version: v1
 paths:
+  "/reservations":
+    get:
+      summary: Retrieve all reservations
+      tags:
+      - Reservations
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get reservations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    videogame_id:
+                      type: integer
+                    days:
+                      type: integer
+                    total_price:
+                      type: number
+                      format: float
+                    videogame:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        photo:
+                          type: string
+                        description:
+                          type: string
+                        price_per_day:
+                          type: number
+                          format: float
+                      required:
+                      - id
+                      - name
+                  required:
+                  - id
+                  - user_id
+                  - videogame_id
+                  - days
+                  - total_price
+    post:
+      summary: Create a reservation
+      tags:
+      - Reservations
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Reservation created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  videogame_id:
+                    type: integer
+                  days:
+                    type: integer
+                  total_price:
+                    type: number
+                    format: float
+                  videogame:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      photo:
+                        type: string
+                      description:
+                        type: string
+                      price_per_day:
+                        type: number
+                        format: float
+                    required:
+                    - id
+                    - name
+                required:
+                - id
+                - user_id
+                - videogame_id
+                - days
+                - total_price
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    videogame_id:
+                      type: integer
+                    days:
+                      type: integer
+                  required:
+                  - videogame_id
+                  - days
+              required:
+              - reservation
   "/users/sign_in":
     post:
       summary: Sign in
