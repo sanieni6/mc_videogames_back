@@ -2,8 +2,8 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @reservations = Reservation.all
-    render json: @reservations
+    @reservations = current_user.reservations.includes(:videogame)
+    render json: @reservations, include: :videogame
   end
 
   def new
@@ -26,11 +26,6 @@ class ReservationsController < ApplicationController
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end
-  end
-
-  def show
-    @user_reservations = current_user.reservations
-    render json: @user_reservations
   end
 
   private
