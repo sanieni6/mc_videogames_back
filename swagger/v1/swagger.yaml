@@ -1,0 +1,50 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users/sign_in":
+    post:
+      summary: Sign in
+      tags:
+      - Sign in
+      parameters: []
+      responses:
+        '200':
+          description: You are logged in.
+        '401':
+          description: Invalid login credentials.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+  "/users/sign_out":
+    delete:
+      summary: Sign out
+      tags:
+      - Sign out
+      parameters:
+      - token: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: You are logged out.
+        '401':
+          description: Invalid token.
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com
