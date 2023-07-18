@@ -54,4 +54,4 @@ gem 'devise-jwt'
 
 gem 'cancancan'
 
-#gem 'rake'
+# gem 'rake'
