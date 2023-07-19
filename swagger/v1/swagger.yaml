@@ -214,6 +214,8 @@ paths:
       summary: Sign out
       tags:
       - Sign out
+      security:
+      - Bearer: []
       parameters:
       - name: Authorization
         in: header

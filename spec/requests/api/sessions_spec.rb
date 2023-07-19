@@ -34,6 +34,7 @@ RSpec.describe 'sessions', type: :request do
   path '/users/sign_out' do
     delete 'Sign out' do
       tags 'Sign out'
+      security [Bearer: []]
       consumes 'application/json'
       produces 'application/json'
       parameter name: :Authorization, in: :header, type: :string
