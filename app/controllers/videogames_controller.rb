@@ -16,13 +16,16 @@ class VideogamesController < ApplicationController
   end
 
   def create
-    user_from_token
-    if can?(:create, Videogame)
-      @videogame = Videogame.new(videogame_params)
-      if @videogame.save
-        render json: @videogame
+    if double_check_user_verification
+      if can?(:create, Videogame)
+        @videogame = Videogame.new(videogame_params)
+        if @videogame.save
+          render json: @videogame
+        else
+          render json: { message: 'Unprocessable Entity' }, status: :unprocessable_entity
+        end
       else
-        render json: { message: 'Unprocessable Entity' }, status: :unprocessable_entity
+        render json: { message: 'You are not authorized to create a videogame.' }, status: :unauthorized
       end
     else
       render json: { message: 'You are not authorized to create a videogame.' }, status: :unauthorized
@@ -30,12 +33,15 @@ class VideogamesController < ApplicationController
   end
 
   def destroy
-    user_from_token
-    if can?(:destroy, Videogame)
-      @videogame = Videogame.find(params[:id])
-      @videogame.reservation.destroy if @videogame.reservation.present?
-      @videogame.destroy
-      render json: { message: 'Videogame deleted.' }, status: :ok
+    if double_check_user_verification
+      if can?(:destroy, Videogame)
+        @videogame = Videogame.find(params[:id])
+        @videogame.reservation.destroy if @videogame.reservation.present?
+        @videogame.destroy
+        render json: { message: 'Videogame deleted.' }, status: :ok
+      else
+        render json: { message: 'You are not authorized to delete a videogame.' }, status: :unauthorized
+      end
     else
       render json: { message: 'You are not authorized to delete a videogame.' }, status: :unauthorized
     end
@@ -52,5 +58,14 @@ class VideogamesController < ApplicationController
                              Rails.application.credentials.devise[:jwt_secret_key]).first
     user_id = jwt_payload['sub']
     User.find(user_id.to_s)
+  end
+
+  def double_check_user_verification
+    return false if request.headers['Authorization'].nil?
+
+    user = user_from_token
+    return true if user_signed_in? && current_user.id == user.id
+
+    false
   end
 end
