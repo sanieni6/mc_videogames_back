@@ -1,5 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
-  respond_to :json
+  #respond_to :json
 
   def destroy
     if request.headers['Authorization'].nil?
@@ -15,9 +15,26 @@ class Users::SessionsController < Devise::SessionsController
     else
       render json: { message: 'Invalid token.' }, status: :unauthorized
     end
+    #respond_to_on_destroy
   end
 
   private
+
+  def respond_to_on_destroy
+    user = user_from_token
+    log_out_success && return if user
+
+    log_out_failure
+  end
+
+  def log_out_success
+    render json: { message: 'You are logged out.' }, status: :ok
+  end
+
+  def log_out_failure
+    render json: { message: 'Hmm nothing happened.' }, status: :unauthorized
+  end
+
 
   def user_from_token
     jwt_payload = JWT.decode(request.headers['Authorization'].split[1],
