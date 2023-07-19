@@ -1,0 +1,420 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/users":
+    post:
+      summary: Sign up
+      tags:
+      - Sign up
+      parameters: []
+      responses:
+        '200':
+          description: Signed up sucessfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  admin:
+                    type: boolean
+                required:
+                - id
+                - email
+                - name
+                - created_at
+                - updated_at
+                - admin
+        '422':
+          description: Something went wrong
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
+  "/reservations":
+    get:
+      summary: Retrieve all reservations
+      tags:
+      - Reservations
+      security:
+      - Bearer: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get reservations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    user_id:
+                      type: integer
+                    videogame_id:
+                      type: integer
+                    days:
+                      type: integer
+                    total_price:
+                      type: number
+                      format: float
+                    videogame:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        photo:
+                          type: string
+                        description:
+                          type: string
+                        price_per_day:
+                          type: number
+                          format: float
+                      required:
+                      - id
+                      - name
+                  required:
+                  - id
+                  - user_id
+                  - videogame_id
+                  - days
+                  - total_price
+        '401':
+          description: Unauthorized
+    post:
+      summary: Create a reservation
+      tags:
+      - Reservations
+      security:
+      - Bearer: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Reservation created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  user_id:
+                    type: integer
+                  videogame_id:
+                    type: integer
+                  days:
+                    type: integer
+                  total_price:
+                    type: number
+                    format: float
+                  videogame:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      photo:
+                        type: string
+                      description:
+                        type: string
+                      price_per_day:
+                        type: number
+                        format: float
+                    required:
+                    - id
+                    - name
+                required:
+                - id
+                - user_id
+                - videogame_id
+                - days
+                - total_price
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reservation:
+                  type: object
+                  properties:
+                    videogame_id:
+                      type: integer
+                    days:
+                      type: integer
+                  required:
+                  - videogame_id
+                  - days
+              required:
+              - reservation
+  "/users/sign_in":
+    post:
+      summary: Sign in
+      tags:
+      - Sign in
+      parameters: []
+      responses:
+        '200':
+          description: You are logged in.
+        '401':
+          description: Invalid login credentials.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+  "/users/sign_out":
+    delete:
+      summary: Sign out
+      tags:
+      - Sign out
+      security:
+      - Bearer: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: You are logged out.
+        '401':
+          description: Invalid token.
+  "/videogames":
+    get:
+      summary: Retrieve all videogames
+      tags:
+      - Videogames
+      security:
+      - Bearer: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Get videogames
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    price_per_day:
+                      type: number
+                      format: float
+                    photo:
+                      type: string
+                  required:
+                  - id
+                  - name
+                  - description
+                  - price_per_day
+                  - photo
+    post:
+      summary: Create a videogame
+      tags:
+      - Videogames
+      security:
+      - Bearer: []
+      parameters:
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Videogame created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price_per_day:
+                    type: number
+                    format: float
+                  photo:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - price_per_day
+                - photo
+        '401':
+          description: You are not authorized to create a videogame.
+        '422':
+          description: Unprocessable Entity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                videogame:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    price_per_day:
+                      type: number
+                      format: float
+                    photo:
+                      type: string
+                  required:
+                  - name
+                  - description
+                  - price_per_day
+                  - photo
+              required:
+              - videogame
+  "/videogames/{id}":
+    get:
+      summary: Retrieve a specific videogame
+      tags:
+      - Videogames
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Videogame details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price_per_day:
+                    type: number
+                    format: float
+                  photo:
+                    type: string
+                required:
+                - id
+                - name
+                - description
+                - price_per_day
+                - photo
+        '404':
+          description: Not Found
+    delete:
+      summary: Delete a videogame
+      tags:
+      - Videogames
+      security:
+      - Bearer: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: Authorization
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Videogame deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+        '401':
+          description: You are not authorized to delete a videogame.
+        '404':
+          description: Not Found
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000
+components:
+  securitySchemes:
+    Bearer:
+      description: JWT key necessary to use API calls
+      type: apiKey
+      name: Authorization
+      in: header
