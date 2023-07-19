@@ -22,7 +22,7 @@ class VideogamesController < ApplicationController
       if @videogame.save
         render json: @videogame
       else
-        render json: @videogame.errors, status: :unprocessable_entity
+        render json: { message: 'Unprocessable Entity' }, status: :unprocessable_entity
       end
     else
       render json: { message: 'You are not authorized to create a videogame.' }, status: :unauthorized

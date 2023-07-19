@@ -4,11 +4,63 @@ info:
   title: API V1
   version: v1
 paths:
+  "/users":
+    post:
+      summary: Sign up
+      tags:
+      - Sign up
+      parameters: []
+      responses:
+        '200':
+          description: Signed up sucessfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  email:
+                    type: string
+                  name:
+                    type: string
+                  created_at:
+                    type: string
+                  updated_at:
+                    type: string
+                  admin:
+                    type: boolean
+                required:
+                - id
+                - email
+                - name
+                - created_at
+                - updated_at
+                - admin
+        '422':
+          description: Something went wrong
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    password_confirmation:
+                      type: string
   "/reservations":
     get:
       summary: Retrieve all reservations
       tags:
       - Reservations
+      security:
+      - Bearer: []
       parameters:
       - name: Authorization
         in: header
@@ -58,10 +110,14 @@ paths:
                   - videogame_id
                   - days
                   - total_price
+        '401':
+          description: Unauthorized
     post:
       summary: Create a reservation
       tags:
       - Reservations
+      security:
+      - Bearer: []
       parameters:
       - name: Authorization
         in: header
@@ -159,7 +215,7 @@ paths:
       tags:
       - Sign out
       parameters:
-      - token: Authorization
+      - name: Authorization
         in: header
         schema:
           type: string
@@ -173,6 +229,8 @@ paths:
       summary: Retrieve all videogames
       tags:
       - Videogames
+      security:
+      - Bearer: []
       parameters:
       - name: Authorization
         in: header
@@ -209,6 +267,8 @@ paths:
       summary: Create a videogame
       tags:
       - Videogames
+      security:
+      - Bearer: []
       parameters:
       - name: Authorization
         in: header
@@ -240,7 +300,7 @@ paths:
                 - price_per_day
                 - photo
         '401':
-          description: Unauthorized
+          description: You are not authorized to create a videogame.
         '422':
           description: Unprocessable Entity
       requestBody:
@@ -273,6 +333,8 @@ paths:
       summary: Retrieve a specific videogame
       tags:
       - Videogames
+      security:
+      - Bearer: []
       parameters:
       - name: id
         in: path
@@ -314,6 +376,8 @@ paths:
       summary: Delete a videogame
       tags:
       - Videogames
+      security:
+      - Bearer: []
       parameters:
       - name: id
         in: path
@@ -337,11 +401,18 @@ paths:
                 required:
                 - message
         '401':
-          description: Unauthorized to delete a videogame
+          description: You are not authorized to delete a videogame.
         '404':
           description: Not Found
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: 127.0.0.1:3000
+components:
+  securitySchemes:
+    Bearer:
+      description: JWT key necessary to use API calls
+      type: apiKey
+      name: Authorization
+      in: header

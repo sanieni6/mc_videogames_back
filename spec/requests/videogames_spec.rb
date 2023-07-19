@@ -1,9 +1,11 @@
+# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'Videogames API', type: :request do
   path '/videogames' do
     get 'Retrieve all videogames' do
       tags 'Videogames'
+      security [Bearer: []]
       produces 'application/json'
       parameter name: :Authorization, in: :header, type: :string
 
@@ -18,7 +20,7 @@ RSpec.describe 'Videogames API', type: :request do
                    price_per_day: { type: :number, format: :float },
                    photo: { type: :string }
                  },
-                 required: [:id, :name, :description, :price_per_day, :photo]
+                 required: %i[id name description price_per_day photo]
                }
 
         run_test! do |_params, _body, _headers|
@@ -29,6 +31,7 @@ RSpec.describe 'Videogames API', type: :request do
 
     post 'Create a videogame' do
       tags 'Videogames'
+      security [Bearer: []]
       consumes 'application/json'
       produces 'application/json'
       parameter name: :Authorization, in: :header, type: :string
@@ -43,7 +46,7 @@ RSpec.describe 'Videogames API', type: :request do
               price_per_day: { type: :number, format: :float },
               photo: { type: :string }
             },
-            required: [:name, :description, :price_per_day, :photo]
+            required: %i[name description price_per_day photo]
           }
         },
         required: [:videogame]
@@ -58,17 +61,23 @@ RSpec.describe 'Videogames API', type: :request do
                  price_per_day: { type: :number, format: :float },
                  photo: { type: :string }
                },
-               required: [:id, :name, :description, :price_per_day, :photo]
+               required: %i[id name description price_per_day photo]
 
-        let(:videogame) { { videogame: { name: 'Example Game', description: 'Example description', price_per_day: 10.0, photo: 'example.jpg' } } }
+        let(:videogame) do
+          { videogame: { name: 'Example Game', description: 'Example description', price_per_day: 10.0,
+                         photo: 'example.jpg' } }
+        end
 
         run_test! do |_params, _body, _headers|
           expect(response).to have_http_status(:ok)
         end
       end
 
-      response '401', 'Unauthorized' do
-        let(:videogame) { { videogame: { name: 'Example Game', description: 'Example description', price_per_day: 10.0, photo: 'example.jpg' } } }
+      response '401', 'You are not authorized to create a videogame.' do
+        let(:videogame) do
+          { videogame: { name: 'Example Game', description: 'Example description', price_per_day: 10.0,
+                         photo: 'example.jpg' } }
+        end
 
         run_test! do |_params, _body, _headers|
           expect(response).to have_http_status(:unauthorized)
@@ -76,7 +85,9 @@ RSpec.describe 'Videogames API', type: :request do
       end
 
       response '422', 'Unprocessable Entity' do
-        let(:videogame) { { videogame: { name: nil, description: 'Example description', price_per_day: 10.0, photo: 'example.jpg' } } }
+        let(:videogame) do
+          { videogame: { name: nil, description: 'Example description', price_per_day: 10.0, photo: 'example.jpg' } }
+        end
 
         run_test! do |_params, _body, _headers|
           expect(response).to have_http_status(:unprocessable_entity)
@@ -88,6 +99,7 @@ RSpec.describe 'Videogames API', type: :request do
   path '/videogames/{id}' do
     get 'Retrieve a specific videogame' do
       tags 'Videogames'
+      security [Bearer: []]
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
       parameter name: :Authorization, in: :header, type: :string
@@ -101,9 +113,12 @@ RSpec.describe 'Videogames API', type: :request do
                  price_per_day: { type: :number, format: :float },
                  photo: { type: :string }
                },
-               required: [:id, :name, :description, :price_per_day, :photo]
+               required: %i[id name description price_per_day photo]
 
-        let(:id) { Videogame.create(name: 'Example Game', description: 'Example description', price_per_day: 10.0, photo: 'example.jpg').id }
+        let(:id) do
+          Videogame.create(name: 'Example Game', description: 'Example description', price_per_day: 10.0,
+                           photo: 'example.jpg').id
+        end
 
         run_test! do |_params, _body, _headers|
           expect(response).to have_http_status(:ok)
@@ -121,6 +136,7 @@ RSpec.describe 'Videogames API', type: :request do
 
     delete 'Delete a videogame' do
       tags 'Videogames'
+      security [Bearer: []]
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
       parameter name: :Authorization, in: :header, type: :string
@@ -132,15 +148,21 @@ RSpec.describe 'Videogames API', type: :request do
                },
                required: [:message]
 
-        let(:id) { Videogame.create(name: 'Example Game', description: 'Example description', price_per_day: 10.0, photo: 'example.jpg').id }
+        let(:id) do
+          Videogame.create(name: 'Example Game', description: 'Example description', price_per_day: 10.0,
+                           photo: 'example.jpg').id
+        end
 
         run_test! do |_params, _body, _headers|
           expect(response).to have_http_status(:ok)
         end
       end
 
-      response '401', 'Unauthorized to delete a videogame' do
-        let(:id) { Videogame.create(name: 'Example Game', description: 'Example description', price_per_day: 10.0, photo: 'example.jpg').id }
+      response '401', 'You are not authorized to delete a videogame.' do
+        let(:id) do
+          Videogame.create(name: 'Example Game', description: 'Example description', price_per_day: 10.0,
+                           photo: 'example.jpg').id
+        end
 
         run_test! do |_params, _body, _headers|
           expect(response).to have_http_status(:unauthorized)
@@ -157,3 +179,4 @@ RSpec.describe 'Videogames API', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
