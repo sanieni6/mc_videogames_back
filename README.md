@@ -121,9 +121,7 @@ Clone this repository to your desired folder:
 Install this project with:
 
  - `bundle install`
- - `rails db:create`
- - `rails db:migrate`
- - `rails db:seed`
+ - `rails db:setup`
 
 ### Usage
 
