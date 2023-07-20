@@ -145,7 +145,7 @@ To start the server, execute the following command:
 👤 **Alejandra Keber Maggi**
 - GitHub: [@AlejandraKeber](https://github.com/AlejandraKeber)
 - Twitter: [@KeberAlejandra](https://twitter.com/KeberAlejandra)
-- LinkedIn: [alejandra-keber](www.linkedin.com/in/alejandra-keber)
+- LinkedIn: [alejandra-keber](https://www.linkedin.com/in/alejandra-keber)
 
 👤 **David Espino**
 
