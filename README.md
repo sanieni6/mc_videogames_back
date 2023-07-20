@@ -1,4 +1,10 @@
-<a name="readme-top"></a>
+<div align="center">
+  <img src="videogames_logo.png" alt="videogames logo" width="220" height="auto">
+  <br/>
+</div>
+<div align="center">
+  <h1><b>Videogames Back End</b></h1>
+</div>
 
 <!--
 
