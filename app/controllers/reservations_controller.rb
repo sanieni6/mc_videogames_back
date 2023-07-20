@@ -2,7 +2,7 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @reservations = current_user.reservations.includes(:videogame)
+    @reservations = current_user.reservations.includes(:videogame).order(:id => :desc)
     render json: @reservations, include: :videogame
   end
 
