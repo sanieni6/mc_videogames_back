@@ -118,7 +118,7 @@ In order to run this project you need:
 Clone this repository to your desired folder:
 
 ```sh
-  git https://github.com/sanieni6/mc_videogames_back.git
+  git clone https://github.com/sanieni6/mc_videogames_back.git
   cd mc_videgames_back
 ```
 
