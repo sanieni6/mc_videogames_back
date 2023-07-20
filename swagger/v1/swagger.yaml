@@ -407,10 +407,10 @@ paths:
         '404':
           description: Not Found
 servers:
-- url: http://{defaultHost}
+- url: https://{defaultHost}
   variables:
     defaultHost:
-      default: 127.0.0.1:3000
+      default: mc-videogames-back.onrender.com
 components:
   securitySchemes:
     Bearer:
