@@ -1,5 +1,4 @@
 class Users::SessionsController < Devise::SessionsController
-
   def destroy
     if request.headers['Authorization'].nil?
       render json: { message: 'Missing token.' }, status: :unauthorized
