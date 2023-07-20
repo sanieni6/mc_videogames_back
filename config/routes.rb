@@ -1,13 +1,13 @@
-Rails.application.routes.draw do
-  mount Rswag::Ui::Engine => '/api-docs', as: 'api_docs'
+Rails.application.routes.draw do  
+  mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+  
   devise_for :users,
               controllers: {
                 sessions: 'users/sessions',
                 registrations: 'users/registrations'
               }
   get '/member-data', to: 'members#show'
-
 
   resources :reservations, only: [:index, :new, :create, :show]
   resources :videogames, only: [:index, :show, :new, :create, :destroy]

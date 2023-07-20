@@ -2,7 +2,7 @@ class VideogamesController < ApplicationController
   before_action :authenticate_user!, except: %i[index]
 
   def index
-    @videogames = Videogame.all.order(:id => :desc)
+    @videogames = Videogame.all.order(id: :desc)
     render json: @videogames
   end
 
