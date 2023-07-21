@@ -1,11 +1,8 @@
 class Users::SessionsController < Devise::SessionsController
+  before_action :authenticate_user!, except: %i[create]
+
   def destroy
-    if request.headers['Authorization'].nil?
-      render json: { message: 'Missing token.' }, status: :unauthorized
-      return
-    end
-    user = user_from_token
-    if user_signed_in? && current_user.id == user.id
+    if user_signed_in?
       sign_out(current_user)
       render json: {
         message: 'You are logged out.'
@@ -18,8 +15,7 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_to_on_destroy
-    user = user_from_token
-    log_out_success && return if user
+    log_out_success && return unless current_user
 
     log_out_failure
   end
@@ -30,13 +26,6 @@ class Users::SessionsController < Devise::SessionsController
 
   def log_out_failure
     render json: { message: 'Hmm nothing happened.' }, status: :unauthorized
-  end
-
-  def user_from_token
-    jwt_payload = JWT.decode(request.headers['Authorization'].split[1],
-                             Rails.application.credentials.devise[:jwt_secret_key]).first
-    user_id = jwt_payload['sub']
-    User.find(user_id.to_s)
   end
 
   def respond_with(_resource, _opts = {})

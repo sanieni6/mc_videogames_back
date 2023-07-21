@@ -13,5 +13,4 @@ class User < ApplicationRecord
                     format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 6, maximum: 20 }
   validates :address, presence: true, length: { minimum: 2, maximum: 255 }
-  validates :admin, inclusion: { in: [true, false] }
 end
