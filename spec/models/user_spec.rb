@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Test User', email: 'test@gmail.com', password: '123456', address: 'Test Address', admin: false) }
+  subject do
+    User.new(name: 'Test User', email: 'test@gmail.com', password: '123456', address: 'Test Address', admin: false)
+  end
   before { subject.save }
 
   it 'name should be present' do
@@ -30,7 +32,7 @@ RSpec.describe User, type: :model do
   end
 
   it 'email should have a maximum length of 50 characters' do
-    subject.email = 'a' * 41 + '@example.com'
+    subject.email = "#{'a' * 41}@example.com"
     expect(subject).to_not be_valid
   end
 
