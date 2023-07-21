@@ -135,6 +135,13 @@ To start the server, execute the following command:
 
 `rails server`
 
+### Tests
+
+To run test, execute the following commands:
+
+`rspec ./spec/models/`
+`rspec ./spec/integration/`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -178,7 +185,7 @@ To start the server, execute the following command:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] **[Add unit tests]**
+- [ ] **[Add devise-jwt tests]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
