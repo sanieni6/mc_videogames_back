@@ -28,6 +28,11 @@ RSpec.describe 'sessions', type: :request do
         let(:user) { { user: { email: 'user.example.com', password: 'password' } } }
         run_test!
       end
+
+      response '404', 'User not found.' do
+        let(:user) { { user: { email: 'user.example.com', password: 'password' } } }
+        run_test!
+      end
     end
   end
 

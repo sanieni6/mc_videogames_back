@@ -196,6 +196,8 @@ paths:
           description: You are logged in.
         '401':
           description: Invalid login credentials.
+        '404':
+          description: User not found.
       requestBody:
         content:
           application/json:
