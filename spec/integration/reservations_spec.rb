@@ -16,13 +16,13 @@ RSpec.describe 'Reservations', type: :request do
   describe 'GET /index' do
     it 'returns http success' do
       headers = Devise::JWT::TestHelpers.auth_headers({}, user)
-      get '/reservations', headers: headers
+      get('/reservations', headers:)
       expect(response).to have_http_status(:success)
     end
 
     it 'shows the reservation' do
       headers = Devise::JWT::TestHelpers.auth_headers({}, user)
-      get '/reservations', headers: headers
+      get('/reservations', headers:)
       expect(response).to have_http_status(:success)
       expect(response.body).to include(videogame.name)
     end
