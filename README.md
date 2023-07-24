@@ -94,6 +94,11 @@ OPTIONAL SECTIONS:
 
 - [Kanban board Link](https://github.com/users/sanieni6/projects/5)
 
+<div align="center">
+  <img src="kanban_back.png" alt="kanban board">
+  <br/>
+</div>
+
 <!-- LINK TO FRONT-END -->
 
 ## 🔗 Link to front end <a name="link-front"></a>
@@ -134,6 +139,13 @@ Install this project with:
 To start the server, execute the following command:
 
 `rails server`
+
+### Tests
+
+To run test, execute the following commands:
+
+`rspec ./spec/models/`
+`rspec ./spec/integration/`
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -178,7 +190,7 @@ To start the server, execute the following command:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] **[Add unit tests]**
+- [ ] **[Add devise-jwt tests]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
