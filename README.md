@@ -92,12 +92,16 @@ OPTIONAL SECTIONS:
 
 ## ⚙️ Kanban Board <a name="kanban-board"></a>
 
-- [Kanban board Link](https://github.com/users/sanieni6/projects/5)
+**We are a five people team**
 
+**Kanban board initial state**
 <div align="center">
   <img src="kanban_back.png" alt="kanban board">
   <br/>
 </div>
+
+
+- [Kanban board Link](https://github.com/users/sanieni6/projects/5)
 
 <!-- LINK TO FRONT-END -->
 
