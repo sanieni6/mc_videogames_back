@@ -94,6 +94,11 @@ OPTIONAL SECTIONS:
 
 - [Kanban board Link](https://github.com/users/sanieni6/projects/5)
 
+<div align="center">
+  <img src="kanban_back.png" alt="kanban board">
+  <br/>
+</div>
+
 <!-- LINK TO FRONT-END -->
 
 ## 🔗 Link to front end <a name="link-front"></a>
