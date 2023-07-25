@@ -121,6 +121,7 @@ In order to run this project you need:
 - Ruby version 3.1.3 or later
 - Rails version 7 or later
 - Postgresql
+- Visual Studio Code
 
 ### Setup
 
@@ -136,6 +137,31 @@ Clone this repository to your desired folder:
 Install this project with:
 
  - `bundle install`
+
+ Generate the master key and copy it.
+
+ - `rake secret`
+
+Remove the `config/credentials.yml.enc` file and run:
+
+  - `EDITOR="code --wait" rails credentials:edit`
+
+Copy the generated secret key and paste it in the credentials file.
+
+Add the following lines to the credentials file:
+
+  `devise:`
+
+  `jwt_secret_key: <your secret key>`
+
+In case you need, add your database credentials to the `config/database.yml` file under the `default` section:
+
+  `username: <your username>`
+  
+  `password: <your password>`
+
+Execute the following command to setup the database and migrate the tables:
+
  - `rails db:setup`
 
 ### Usage
