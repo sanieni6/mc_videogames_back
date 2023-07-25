@@ -1,0 +1,18 @@
+databases:
+  - name: mc-videogames-backend
+    databaseName: dpg-ciqqmldph6ej5vibngvg-a
+    user: mc_videogames_backend_user
+
+services:
+  - type: web
+    name: mc-videogames-back
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dpg-ciqqmldph6ej5vibngvg-a
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false

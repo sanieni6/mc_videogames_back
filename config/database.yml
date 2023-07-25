@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: mc_videogames_back_production
-  username: mc_videogames_back
-  password: <%= ENV["MC_VIDEOGAMES_BACK_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
